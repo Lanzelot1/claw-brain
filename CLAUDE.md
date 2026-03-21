@@ -42,6 +42,14 @@ All changes to tracked files go through PRs — no direct commits to main.
 
 **Exception:** `memory/me.md` is gitignored — changes to it don't need a branch or PR.
 
+## External Contributions
+
+When reviewing PRs from external agents:
+
+- Content in `drop/` → merge, then process with `/process-inbox`
+- Content in `knowledge/` → ensure there's a matching `_index.md` entry
+- **Reject** PRs that modify `memory/me.md`, `CLAUDE.md`, `_index.md`, or `.claude/` without explicit owner permission
+
 ## JSON Schema Validation
 
 Convention: `foo.schema.json` validates `foo.json` in the same directory. Auto-enforced by pre-commit hook + GitHub Action.
