@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: validate-json-schemas
+        name: Validate JSON against schemas
+        entry: scripts/validate-schemas.sh
+        language: script
+        files: \.json$
+        pass_filenames: false

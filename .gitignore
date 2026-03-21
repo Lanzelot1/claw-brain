@@ -1,0 +1,16 @@
+# Personal data (never commit)
+memory/me.md
+.claude/settings.local.json
+
+# Secrets
+.env
+.env.*
+secrets/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Editor
+.vscode/
+.idea/
