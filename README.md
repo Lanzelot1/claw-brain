@@ -37,6 +37,8 @@ Works as a personal life brain, a team knowledge base, or a [nanoclaw](https://g
 | `/new` | Create a new knowledge area (folder + index entry + CLAUDE.md update) |
 | `/process-inbox` | Categorize and file everything in `drop/` |
 | `/status` | Show brain overview — areas, inbox, recent output |
+| `/learn` | Extract learnings from the current session into memory |
+| `/recall` | Surface relevant knowledge before starting a task |
 
 ## Customization
 
