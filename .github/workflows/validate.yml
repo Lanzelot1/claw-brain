@@ -1,14 +1,16 @@
-name: Validate JSON Schemas
+name: Validate
 
 on:
   push:
     paths:
       - '**/*.json'
       - '**/*.schema.json'
+      - 'knowledge/**/*.md'
   pull_request:
     paths:
       - '**/*.json'
       - '**/*.schema.json'
+      - 'knowledge/**/*.md'
 
 jobs:
   validate:
@@ -21,3 +23,6 @@ jobs:
 
       - name: Validate JSON files against schemas
         run: ./scripts/validate-schemas.sh
+
+      - name: Validate knowledge file frontmatter
+        run: ./scripts/validate-frontmatter.sh
