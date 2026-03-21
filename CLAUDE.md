@@ -11,6 +11,7 @@
 
 - `memory/_index.md` — **Read this first.** Table of contents linking to all knowledge files.
 - `memory/me.md` — Personal profile (gitignored).
+- `memory/lessons.md` — Learnings from past sessions (gitignored).
 - `knowledge/` — All documents: reference docs, raw data, strategy files. Single source of truth.
 - `drop/` — Inbox for new files. Process immediately when files are present.
 - `output/` — All generated files. Format: `YYYY-MM-DD-description.md`
@@ -18,6 +19,8 @@
 ## Personal Context
 
 Read `memory/me.md` first for personal context (writing style, priorities, tone). This file is gitignored — never committed.
+
+Also check `memory/lessons.md` for learnings from past sessions — workarounds, preferences, and patterns worth remembering.
 
 If `memory/me.md` doesn't exist yet, suggest running `/onboard` to create it.
 
@@ -29,6 +32,8 @@ If `memory/me.md` doesn't exist yet, suggest running `/onboard` to create it.
 - **No messages** without explicit confirmation.
 - **English** for everything.
 - When writing outreach/content: read `memory/me.md` for personal writing style.
+- **Source required** — Every file in `knowledge/` needs `source:` frontmatter. Can be a URL, internal JSON file path, or description (e.g. `"interview with client X"`). No knowledge without provenance.
+- **Facts over fluff** — Knowledge files must contain specific facts, data, quotes, or raw information. Never write vague summaries or AI filler.
 
 ## Git Workflow
 

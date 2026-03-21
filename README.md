@@ -54,6 +54,10 @@ JSON files are your "databases" — no Postgres, no Airtable, just files your ag
 
 **Use it for anything structured:** contacts, inventory, projects, config — any data that benefits from a defined shape. Your agent works with these files natively, no connectors or ORMs needed.
 
+### Knowledge Quality
+
+Every `.md` file in `knowledge/` must have YAML frontmatter with a `source:` field — a URL, internal file path, or description of where the information came from. This is enforced by the same pre-commit hook + CI pipeline as JSON schemas.
+
 **One-time setup:**
 
 ```bash

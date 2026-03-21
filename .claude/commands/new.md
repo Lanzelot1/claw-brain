@@ -10,7 +10,8 @@ The user wants to create a new area in the brain. An area is a knowledge domain 
 2. **Ask:** "What should be tracked in this area?" — Understand what kind of information goes here (e.g. reading list, project log, weekly notes, reference links).
 3. **Create the knowledge file:**
    - Create `knowledge/{area}/` folder
-   - Write an initial `.md` file (named after the primary concern, e.g. `reading-list.md`, `log.md`, `notes.md`) with sections based on what they described
+   - Write an initial `.md` file (named after the primary concern, e.g. `reading-list.md`, `log.md`, `notes.md`) with `source:` frontmatter and sections based on what they described
+   - The `source:` field should describe where the initial content came from (e.g. `"user input"`, `"onboarding"`)
 4. **Update `memory/_index.md`:**
    - Add a new section header for the area
    - Add a link to the main file with a 1-sentence description

@@ -7,3 +7,9 @@ repos:
         language: script
         files: \.json$
         pass_filenames: false
+      - id: validate-knowledge-frontmatter
+        name: Validate knowledge file frontmatter
+        entry: scripts/validate-frontmatter.sh
+        language: script
+        files: ^knowledge/.*\.md$
+        pass_filenames: false
