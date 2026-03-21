@@ -4,7 +4,7 @@
 
 A fork-and-use template for building your own **agent brain** — a knowledge management system powered by Claude Code, with slash commands, structured data validation, and a git-first workflow.
 
-Works as a personal life brain, a team knowledge base, or a [nanoclaw](https://github.com/nicobailon/nanoclaw) group brain.
+Works as a personal brain, a shared team knowledge base, a [nanoclaw](https://github.com/nicobailon/nanoclaw) group brain, or a brain for openclaw bots and agents.
 
 ## Quick Start
 
@@ -20,7 +20,7 @@ Works as a personal life brain, a team knowledge base, or a [nanoclaw](https://g
 - **Files over features** — Knowledge lives in markdown and JSON. No databases, no services, no vendor lock-in.
 - **Agent-native** — Built for Claude Code. Slash commands do the work. The codebase is small enough to understand in one session.
 - **Structured when you need it** — JSON files with co-located schemas give you validation without infrastructure. Your agent reads and writes them directly.
-- **Personal or enterprise** — Same template works as a personal life brain, a team knowledge base, or a nanoclaw group brain.
+- **Personal or enterprise** — Same template works as a personal brain, a shared team knowledge base, a [nanoclaw](https://github.com/nicobailon/nanoclaw) group brain, or a brain for openclaw bots and agents.
 
 ## Folders
 
