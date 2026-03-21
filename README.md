@@ -24,7 +24,7 @@ Works as a personal life brain, a team knowledge base, or a [nanoclaw](https://g
 
 | Folder | Purpose |
 |--------|---------|
-| `memory/` | Index (`_index.md`) and personal profile (`me.md`, gitignored) |
+| `memory/` | Index (`_index.md`), personal profile (`me.md`), and session learnings (`lessons.md`) — both gitignored |
 | `knowledge/` | All documents — reference, raw data, strategy. Source of truth. |
 | `drop/` | Inbox for new files. Processed by `/process-inbox`. |
 | `output/` | Generated files. Named `YYYY-MM-DD-description.md`. |
@@ -36,7 +36,7 @@ Works as a personal life brain, a team knowledge base, or a [nanoclaw](https://g
 | `/onboard` | Create your personal profile and fill in brain metadata |
 | `/new` | Create a new knowledge area (folder + index entry + CLAUDE.md update) |
 | `/process-inbox` | Categorize and file everything in `drop/` |
-| `/status` | Show brain overview — areas, inbox, recent output |
+| `/status` | Show brain overview — areas, inbox, recent output, health checks |
 | `/learn` | Extract learnings from the current session into memory |
 | `/recall` | Surface relevant knowledge before starting a task |
 
@@ -56,7 +56,7 @@ JSON files are your "databases" — no Postgres, no Airtable, just files your ag
 
 ### Knowledge Quality
 
-Every `.md` file in `knowledge/` must have YAML frontmatter with a `source:` field — a URL, internal file path, or description of where the information came from. This is enforced by the same pre-commit hook + CI pipeline as JSON schemas.
+Every `.md` file in `knowledge/` must have YAML frontmatter with a `source:` field — a URL, internal file path, or description of where the information came from. Knowledge files must contain specific facts, data, or raw information — no vague summaries or AI filler. Both rules are enforced by pre-commit hook + CI pipeline, same pattern as JSON schemas.
 
 **One-time setup:**
 
