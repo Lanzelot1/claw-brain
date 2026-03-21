@@ -1,10 +1,8 @@
 # Claw Brain
 
-A fork-and-use template for building your own **agent brain** — a Claude Code-powered knowledge management system with slash commands, git-first workflow, and structured data validation.
+A fork-and-use template for building your own **agent brain** — a knowledge management system powered by Claude Code, with slash commands, structured data validation, and a git-first workflow.
 
-Derived from our internal kayba-brain — the system we use to run [Kayba](https://github.com/kayba-ai), built on the [ACE framework](https://github.com/kayba-ai/agentic-context-engine). We love the [nanoclaw](https://github.com/nicobailon/nanoclaw) philosophy of lightweight, composable agent groups, so we made this template work seamlessly as a nanoclaw brain too.
-
-Made by and for Claude Code. ♥
+Works as a personal life brain, a team knowledge base, or a [nanoclaw](https://github.com/nicobailon/nanoclaw) group brain.
 
 ## Quick Start
 
@@ -15,12 +13,19 @@ Made by and for Claude Code. ♥
 5. Run `/new` — creates your first knowledge area
 6. Drop files into `drop/`, run `/process-inbox` — auto-categorizes into knowledge areas
 
+## Philosophy
+
+- **Files over features** — Knowledge lives in markdown and JSON. No databases, no services, no vendor lock-in.
+- **Agent-native** — Built for Claude Code. Slash commands do the work. The codebase is small enough to understand in one session.
+- **Structured when you need it** — JSON files with co-located schemas give you validation without infrastructure. Your agent reads and writes them directly.
+- **Personal or enterprise** — Same template works as a personal life brain, a team knowledge base, or a nanoclaw group brain.
+
 ## Folders
 
 | Folder | Purpose |
 |--------|---------|
 | `memory/` | Index (`_index.md`) and personal profile (`me.md`, gitignored) |
-| `knowledge/` | All documents — reference docs, raw data, strategy files. Source of truth. |
+| `knowledge/` | All documents — reference, raw data, strategy. Source of truth. |
 | `drop/` | Inbox for new files. Processed by `/process-inbox`. |
 | `output/` | Generated files. Named `YYYY-MM-DD-description.md`. |
 
@@ -39,9 +44,20 @@ Made by and for Claude Code. ♥
 
 Create `.claude/commands/your-command.md` with a YAML frontmatter `description` and markdown instructions. See existing commands for the pattern.
 
-### Adding schemas
+### Structured Data
 
-Place `foo.schema.json` next to `foo.json` in any directory. The pre-commit hook and CI action will auto-validate.
+JSON files are your "databases" — no Postgres, no Airtable, just files your agent can read and write directly. Co-located schemas keep them honest.
+
+**The convention:** place `foo.schema.json` next to `foo.json` in any directory. The pre-commit hook and CI action validate automatically — on every commit locally and on every push/PR in CI.
+
+**Use it for anything structured:** contacts, inventory, projects, config — any data that benefits from a defined shape. Your agent works with these files natively, no connectors or ORMs needed.
+
+**One-time setup:**
+
+```bash
+pip install pre-commit check-jsonschema
+pre-commit install
+```
 
 ### Adding areas
 
@@ -61,20 +77,13 @@ git clone <your-fork> my-brain
 
 The brain uses relative paths only — no container paths or IPC references. NanoClaw's own `CLAUDE.md` loads additively alongside this one.
 
-## Setup
+## Built On
 
-### JSON Schema Validation (optional)
-
-```bash
-pip install pre-commit check-jsonschema
-pre-commit install
-```
-
-This enables automatic JSON schema validation on commit. CI also runs validation on every push/PR.
+Derived from our internal kayba-brain — the system we use to run [Kayba](https://github.com/kayba-ai), built on the [ACE framework](https://github.com/kayba-ai/agentic-context-engine). Inspired by the [nanoclaw](https://github.com/nicobailon/nanoclaw) philosophy of lightweight, composable agent groups.
 
 ## Contributing
 
-Contributions are welcome! See [CONTRIBUTING.md](CONTRIBUTING.md) for guidelines.
+Contributions welcome — see [CONTRIBUTING.md](CONTRIBUTING.md).
 
 ## License
 
