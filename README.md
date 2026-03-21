@@ -36,7 +36,6 @@ Works as a personal life brain, a team knowledge base, or a [nanoclaw](https://g
 | `/onboard` | Create your personal profile and fill in brain metadata |
 | `/new` | Create a new knowledge area (folder + index entry + CLAUDE.md update) |
 | `/process-inbox` | Categorize and file everything in `drop/` |
-| `/connect` | Generate a contributor guide for an external agent |
 | `/status` | Show brain overview — areas, inbox, recent output |
 
 ## Customization
@@ -71,7 +70,7 @@ Run `/new` or manually:
 
 External agents can write to your brain using the standard git workflow: clone → branch → write → PR. The brain owner reviews and merges.
 
-Run `/connect` to generate a **contributor guide** tailored to a specific agent or service. The guide includes repo URL, write target, file conventions, and a minimal git example — ready to paste into a system prompt, CI config, or bot setup.
+Ask Claude to generate a contributor guide if you need one — it can tailor it to any agent or service.
 
 Works with: nanoclaw groups, GitHub Actions, Discord/Slack bots, CI pipelines, cron jobs, or any script that can `git push`.
 
