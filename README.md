@@ -31,6 +31,7 @@ Made by and for Claude Code. ♥
 | `/onboard` | Create your personal profile and fill in brain metadata |
 | `/new` | Create a new knowledge area (folder + index entry + CLAUDE.md update) |
 | `/process-inbox` | Categorize and file everything in `drop/` |
+| `/status` | Show brain overview — areas, inbox, recent output |
 
 ## Customization
 
