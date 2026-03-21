@@ -1,5 +1,7 @@
 # Claw Brain
 
+[![Validate](https://github.com/Lanzelot1/claw-brain/actions/workflows/validate.yml/badge.svg)](https://github.com/Lanzelot1/claw-brain/actions/workflows/validate.yml)
+
 A fork-and-use template for building your own **agent brain** — a knowledge management system powered by Claude Code, with slash commands, structured data validation, and a git-first workflow.
 
 Works as a personal life brain, a team knowledge base, or a [nanoclaw](https://github.com/nicobailon/nanoclaw) group brain.
