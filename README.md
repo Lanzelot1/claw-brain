@@ -1,3 +1,4 @@
+<div align="center">
 <pre>
    ██████╗██╗      █████╗ ██╗    ██╗
   ██╔════╝██║     ██╔══██╗██║    ██║
@@ -7,6 +8,7 @@
    ╚═════╝╚══════╝╚═╝  ╚═╝ ╚══╝╚══╝
             B  R  A  I  N
 </pre>
+</div>
 
 [![Validate](https://github.com/Lanzelot1/claw-brain/actions/workflows/validate.yml/badge.svg)](https://github.com/Lanzelot1/claw-brain/actions/workflows/validate.yml)
 
