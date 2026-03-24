@@ -1,4 +1,12 @@
-# Claw Brain
+<pre>
+   ██████╗██╗      █████╗ ██╗    ██╗
+  ██╔════╝██║     ██╔══██╗██║    ██║
+  ██║     ██║     ███████║██║ █╗ ██║
+  ██║     ██║     ██╔══██║██║███╗██║
+  ╚██████╗███████╗██║  ██║╚███╔███╔╝
+   ╚═════╝╚══════╝╚═╝  ╚═╝ ╚══╝╚══╝
+            B  R  A  I  N
+</pre>
 
 [![Validate](https://github.com/Lanzelot1/claw-brain/actions/workflows/validate.yml/badge.svg)](https://github.com/Lanzelot1/claw-brain/actions/workflows/validate.yml)
 
