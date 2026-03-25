@@ -21,8 +21,12 @@ Review the current conversation and save reusable insights to `memory/lessons.md
    ```
    - YYYY-MM-DD: [topic] — insight text
    ```
-6. **If the file exceeds 50 entries**, ask the user which older entries can be consolidated or removed
-7. **Show a summary** of what was saved (or "nothing new to save" if the session was routine)
+6. **Graduation check** — Review the extracted learnings for any insight that is a **durable fact** about the domain (not a personal preference, not a debugging workaround, not session-specific). Examples: "API rate-limits at 100 req/s", "The auth service requires JWT with RS256".
+   - For each durable insight, ask the user: "This looks like permanent knowledge rather than a session learning: `{insight}`. Want me to add it to `knowledge/{area}/` instead?"
+   - If yes: append to the most relevant **existing** knowledge file (don't create a new file). Add `source: "session discovery, YYYY-MM-DD"` to the frontmatter if needed. Search other knowledge areas for related files and add cross-references using `[title](../area/file.md)` format under a `## Related` section.
+   - If no: leave it in `lessons.md` as normal
+7. **If the file exceeds 50 entries**, ask the user which older entries can be consolidated or removed
+8. **Show a summary** of what was saved (or "nothing new to save" if the session was routine)
 
 ## Git
 

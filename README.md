@@ -31,6 +31,7 @@ Works as a personal brain, a shared team knowledge base, a [nanoclaw](https://gi
 - **Agent-native** - Built for Claude Code. Slash commands do the work. The codebase is small enough to understand in one session.
 - **Structured when you need it** - JSON files with co-located schemas give you validation without infrastructure. Your agent reads and writes them directly.
 - **Personal or enterprise** - Same template works as a personal brain, a shared team knowledge base, a [nanoclaw](https://github.com/nicobailon/nanoclaw) group brain, or a brain for openclaw bots and agents.
+- **Connected when relevant** — Related knowledge files link to each other using standard markdown links. Connections grow organically through commands, not forced upfront. The index navigates; links connect.
 
 ## Folders
 

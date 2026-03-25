@@ -12,8 +12,9 @@ Process all new files in the `drop/` folder.
    b. **Categorize:** Match it to an existing area from the index
    c. **Check `source:` frontmatter:** If the file is `.md` and missing `source:` in its YAML frontmatter, ask the user: "Where did this file come from?" and add the appropriate `source:` field before moving it.
    d. **Move the file** to `knowledge/{area}/`
-   e. **Add an entry** to `memory/_index.md` under the matching area section (path + 1-sentence description)
-   f. **Add an entry** under "Recently Added" at the bottom
+   e. **Cross-reference:** Search other knowledge areas for substantively related files (by topic, shared terminology, complementary content). If found, ask the user: "I found these related files — should I add cross-references?" If yes, add a `## Related` section at the bottom of the newly filed document with standard markdown links using `[title](../other-area/file.md)` format, and add reciprocal links in the related file(s) pointing back.
+   f. **Add an entry** to `memory/_index.md` under the matching area section (path + 1-sentence description)
+   g. **Add an entry** under "Recently Added" at the bottom
 3. **If a file doesn't fit any existing area:**
    - Ask the user: "This file doesn't fit any existing area. Want to create a new one?"
    - If yes, run the `/new` workflow first, then process the file into the new area

@@ -34,6 +34,7 @@ If `memory/me.md` doesn't exist yet, suggest running `/onboard` to create it.
 - When writing outreach/content: read `memory/me.md` for personal writing style.
 - **Source required** — Every file in `knowledge/` needs `source:` frontmatter. Can be a URL, internal JSON file path, or description (e.g. `"interview with client X"`). No knowledge without provenance.
 - **Facts over fluff** — Knowledge files must contain specific facts, data, quotes, or raw information. Never write vague summaries or AI filler.
+- **Cross-reference when substantive** — When creating or updating knowledge files, add standard markdown links to related files in other areas. Use `[title](../area/file.md)` format. Don't force connections — only link when the relationship is genuinely useful.
 
 ## Git Workflow
 

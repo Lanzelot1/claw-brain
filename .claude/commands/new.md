@@ -12,6 +12,7 @@ The user wants to create a new area in the brain. An area is a knowledge domain 
    - Create `knowledge/{area}/` folder
    - Write an initial `.md` file (named after the primary concern, e.g. `reading-list.md`, `log.md`, `notes.md`) with `source:` frontmatter and sections based on what they described
    - The `source:` field should describe where the initial content came from (e.g. `"user input"`, `"onboarding"`)
+   - **Cross-reference:** Search existing knowledge areas for related content. If found, suggest adding a `## Related` section in the new file with standard markdown links using `[title](../other-area/file.md)` format, and add reciprocal links in the related file(s)
 4. **Update `memory/_index.md`:**
    - Add a new section header for the area
    - Add a link to the main file with a 1-sentence description
