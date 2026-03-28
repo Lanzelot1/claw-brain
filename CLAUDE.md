@@ -46,7 +46,9 @@ All changes to tracked files go through PRs — no direct commits to main.
 4. **Push + open PR:** `git push -u origin <branch>` then `gh pr create`
 5. **Share the PR link** with the user so they can merge
 
-**Exception:** `memory/me.md` is gitignored — changes to it don't need a branch or PR.
+**Role overrides:** Git permissions vary by agent role (e.g. orchestrators commit directly to main). See `memory/roles.md` for details.
+
+**Exception:** Gitignored files (memory/me.md, memory/roles.md, etc.) don't need commits.
 
 ## External Contributions
 
