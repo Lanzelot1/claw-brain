@@ -13,10 +13,11 @@ You're onboarding a new user to this brain. Your goal is to create their persona
 3. **Language preferences** — Which language for what context? (e.g. German for customer comms, English for technical)
 4. **Current priorities** — What are they focused on right now?
 5. **Anything else** they want Claude to know about how they work
+6. **Agent role** — Are they the orchestrator (main agent, commits to main), a repo-agent (works on branches + PRs), or external? See `memory/roles.md` for role definitions.
 
 ## After the conversation
 
-Write the profile to `memory/me.md` with all gathered information. Keep it concise and useful — this file is read before every task.
+Write the profile to `memory/me.md` with all gathered information, including their agent role. Keep it concise and useful — this file is read before every task.
 
 ## Also check
 
