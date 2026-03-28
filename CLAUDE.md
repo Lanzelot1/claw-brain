@@ -38,15 +38,17 @@ If `memory/me.md` doesn't exist yet, suggest running `/onboard` to create it.
 
 ## Git Workflow
 
-All changes to tracked files go through PRs — no direct commits to main.
+Git permissions depend on agent role. See `memory/roles.md` for full details.
 
-1. **Pull latest:** `git pull origin main`
-2. **Create a branch:** `git checkout -b <descriptive-name>` (e.g. `add-research-area`, `process-inbox-mar-07`)
-3. **Make changes and commit:** Short, clean commit messages
-4. **Push + open PR:** `git push -u origin <branch>` then `gh pr create`
-5. **Share the PR link** with the user so they can merge
+**Orchestrator (Overview tab):** Commits directly to main. Short, clean commit messages.
 
-**Exception:** `memory/me.md` is gitignored — changes to it don't need a branch or PR.
+**Repo-agents:** Always use branches + PRs:
+1. `git checkout -b <descriptive-name>`
+2. Make changes, commit
+3. `git push -u origin <branch>` then `gh pr create`
+4. Share the PR link with the user
+
+**Exception:** Gitignored files (memory/me.md, memory/roles.md, etc.) don't need commits.
 
 ## External Contributions
 

@@ -6,6 +6,7 @@ Table of contents for the brain. Read this first, then open files as needed.
 
 - [me.md](me.md) — Name, role, writing style, priorities (gitignored)
 - [lessons.md](lessons.md) — Learnings from past sessions (gitignored)
+- [roles.md](roles.md) — Agent roles and permissions (gitignored)
 
 <!-- New areas will be added here by /new -->
 
