@@ -14,9 +14,23 @@ Give the user a quick overview of the brain's current state.
 3. List the 5 most recent files in `output/`
 4. Present a clean, concise summary
 
+## Health Score
+
+Calculate a health score (0-100) from these metrics. Skip this section entirely if there are no `.md` files in `knowledge/`.
+
+| Metric | Weight | How |
+|--------|--------|-----|
+| Freshness | 25% | % of knowledge `.md` files with git commit <30 days |
+| Source coverage | 25% | % with `source:` in YAML frontmatter |
+| Index coverage | 20% | % referenced in `memory/_index.md` |
+| Cross-references | 15% | % with ≥1 markdown link to another knowledge file |
+| Inbox clear | 15% | 100 if `drop/` is empty, 0 otherwise |
+
+Display as: **Brain Health: X/100** with a breakdown table showing each metric's score.
+
 ## Health Checks
 
-After the overview, run health checks. Skip this section entirely if there are no `.md` files in `knowledge/`.
+After the score, run detailed health checks:
 
 | Check | How |
 |-------|-----|
@@ -24,5 +38,6 @@ After the overview, run health checks. Skip this section entirely if there are n
 | Missing sources | Check each `.md` file in `knowledge/` for `source:` in YAML frontmatter. List any files missing it. |
 | Orphaned files | Find `.md` files in `knowledge/` that are not referenced in `memory/_index.md` |
 | Index coverage | Compare file count in `knowledge/` vs entries in `_index.md` |
+| Cross-references | Find knowledge files with no markdown links to other knowledge files |
 
 Present health results as a compact table or list. Only highlight problems — don't list every file if everything is healthy.
