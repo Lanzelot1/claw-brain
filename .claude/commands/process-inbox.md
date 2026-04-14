@@ -9,15 +9,20 @@ Process all new files in the `drop/` folder.
 1. **Read `memory/_index.md`** to discover all available areas
 2. **For each file in `drop/`:**
    a. Read the content and understand what it's about
-   b. **Categorize:** Match it to an existing area from the index
-   c. **Check `source:` frontmatter:** If the file is `.md` and missing `source:` in its YAML frontmatter, ask the user: "Where did this file come from?" and add the appropriate `source:` field before moving it.
-   d. **Move the file** to `knowledge/{area}/`
-   e. **Cross-reference:** Search other knowledge areas for substantively related files (by topic, shared terminology, complementary content). If found, ask the user: "I found these related files — should I add cross-references?" If yes, add a `## Related` section at the bottom of the newly filed document with standard markdown links using `[title](../other-area/file.md)` format, and add reciprocal links in the related file(s) pointing back.
-   f. **Add an entry** to `memory/_index.md` under the matching area section (path + 1-sentence description)
-   g. **Add an entry** under "Recently Added" at the bottom
+   b. **Archive original:** Copy the file to `raw/` (prepend `YYYY-MM-DD-` if no date prefix exists). Never overwrite — if a file with that name exists in `raw/`, append a counter.
+   c. **Categorize:** Match it to an existing area from the index
+   d. **Prepare knowledge file:**
+      - If the file is already a well-structured `.md` with frontmatter: move it to `knowledge/{area}/`, ensure `source:` frontmatter exists, add `type: source` if no `type:` field.
+      - If the file is a PDF, image, data file, or unstructured text: create a new `.md` file in `knowledge/{area}/` that extracts the key facts, data, and quotes. Set `source:` to the `raw/` path. Set `type: source`. The raw file stays in `raw/` only.
+   e. **Check `source:` frontmatter:** If the source is unclear, ask the user: "Where did this file come from?"
+   f. **Cross-reference:** Search other knowledge areas for substantively related files. If found, ask: "I found these related files — should I add cross-references?" If yes, add `## Related` sections with reciprocal links.
+   g. **Update wiki pages:** Check if any existing wiki pages (`type: wiki`) in `knowledge/` cover topics related to this new source. If so, ask: "These wiki pages may need updating with the new information: [list]. Update them?" If yes, incorporate new facts and add the new source to their `## Sources` section.
+   h. **Add entries** to `memory/_index.md` (area section + Recently Added)
+   i. **Log:** Append to `memory/log.md`: `YYYY-MM-DD HH:MM | ingest | {filename} → knowledge/{area}/{filename}`
 3. **If a file doesn't fit any existing area:**
    - Ask the user: "This file doesn't fit any existing area. Want to create a new one?"
    - If yes, run the `/new` workflow first, then process the file into the new area
+4. **Remove processed files from `drop/`**
 
 ## Git
 
@@ -28,8 +33,9 @@ After processing all files:
 
 ## Rules
 
-- Do NOT create summaries or distilled copies — the knowledge files are the source of truth
+- Source files contain raw facts — no AI filler, no vague summaries
 - The index only gets the file path and a max 1-sentence description
 - Ask before deleting anything
 - Show a summary of what was processed when done
 - If `drop/` is empty, just say so
+- Never modify files already in `raw/`

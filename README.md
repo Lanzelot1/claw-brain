@@ -37,8 +37,9 @@ Works as a personal brain, a shared team knowledge base, a [nanoclaw](https://gi
 
 | Folder | Purpose |
 |--------|---------|
-| `memory/` | Index (`_index.md`), personal profile (`me.md`), and session learnings (`lessons.md`) - both gitignored |
-| `knowledge/` | All documents - reference, raw data, strategy. Source of truth. |
+| `memory/` | Index (`_index.md`), personal profile (`me.md`), session learnings (`lessons.md`), and activity log (`log.md`) - all gitignored except index |
+| `knowledge/` | All documents — source files (raw facts) and wiki pages (synthesized). Source of truth. |
+| `raw/` | Immutable source document archive. Originals preserved here during inbox processing. Gitignored by default. |
 | `drop/` | Inbox for new files. Processed by `/process-inbox`. |
 | `output/` | Generated files. Named `YYYY-MM-DD-description.md`. |
 
@@ -52,6 +53,17 @@ Works as a personal brain, a shared team knowledge base, a [nanoclaw](https://gi
 | `/status` | Show brain overview - areas, inbox, recent output, health checks |
 | `/learn` | Extract learnings from the current session into memory |
 | `/recall` | Surface relevant knowledge before starting a task |
+| `/synthesize` | Create or update wiki pages that synthesize across multiple sources |
+| `/sleep` | Autonomous improvement loop — explore, research, synthesize, clean up |
+
+## Wiki Pattern (Optional)
+
+Inspired by [Karpathy's LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) pattern. Knowledge files come in two types:
+
+- **Source files** (`type: source`) — Raw facts, data, quotes. The ground truth. Default if `type:` is omitted.
+- **Wiki pages** (`type: wiki`) — Synthesized pages that weave together multiple sources. Can be regenerated from source files.
+
+Use `/synthesize` to create wiki pages. Use `/process-inbox` to ingest new sources. When you ingest a source, originals are archived immutably in `raw/`. Wiki pages are optional — the system works perfectly fine with only source files.
 
 ## Customization
 

@@ -41,3 +41,16 @@ After the score, run detailed health checks:
 | Cross-references | Find knowledge files with no markdown links to other knowledge files |
 
 Present health results as a compact table or list. Only highlight problems — don't list every file if everything is healthy.
+
+## Wiki Health
+
+Only display this section if any `type: wiki` files exist in `knowledge/`.
+
+| Check | How |
+|-------|-----|
+| Wiki coverage | Count wiki pages vs source files. Report ratio (not a score — there's no "right" number). |
+| Stale wiki pages | Wiki pages whose source files have been modified more recently than the wiki page's `updated:` date. |
+| Unlinked sources | Source files that aren't referenced in any wiki page's `## Sources` section. |
+| Contradictions | Note any contradictions flagged in `memory/log.md` that haven't been resolved. |
+
+Present as an addendum — not part of the main health score.
