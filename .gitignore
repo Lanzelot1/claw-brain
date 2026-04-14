@@ -2,7 +2,12 @@
 memory/me.md
 memory/lessons.md
 memory/roles.md
+memory/log.md
 .claude/settings.local.json
+
+# Raw source documents (large files, not version-controlled by default)
+raw/*
+!raw/.gitkeep
 
 # Secrets
 .env

@@ -10,6 +10,10 @@ Table of contents for the brain. Read this first, then open files as needed.
 
 <!-- New areas will be added here by /new -->
 
+## Wiki Pages
+
+<!-- Synthesized pages that weave together multiple sources. Added by /synthesize. -->
+
 ## Recently Added
 
 <!-- Claude: Add new entries here, newest on top. Format: YYYY-MM-DD: description -->
