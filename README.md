@@ -54,6 +54,7 @@ Works as a personal brain, a shared team knowledge base, a [nanoclaw](https://gi
 | `/learn` | Extract learnings from the current session into memory |
 | `/recall` | Surface relevant knowledge before starting a task |
 | `/synthesize` | Create or update wiki pages that synthesize across multiple sources |
+| `/sleep` | Autonomous improvement loop — explore, research, synthesize, clean up |
 
 ## Wiki Pattern (Optional)
 

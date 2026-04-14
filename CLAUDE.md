@@ -76,7 +76,7 @@ Convention: `foo.schema.json` validates `foo.json` in the same directory. Auto-e
 
 ## Areas
 
-<!-- Auto-updated by /new — do not edit manually -->
+<!-- Updated by /new -->
 
 | Area | Scope |
 |------|-------|
