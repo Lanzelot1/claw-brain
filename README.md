@@ -58,12 +58,39 @@ Works as a personal brain, a shared team knowledge base, a [nanoclaw](https://gi
 
 ## Wiki Pattern (Optional)
 
-Inspired by [Karpathy's LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) pattern. Knowledge files come in two types:
+Inspired by [Karpathy's LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) pattern. Instead of re-deriving knowledge on every query, the LLM incrementally compiles sources into a structured, interlinked wiki that compounds over time.
 
-- **Source files** (`type: source`) — Raw facts, data, quotes. The ground truth. Default if `type:` is omitted.
-- **Wiki pages** (`type: wiki`) — Synthesized pages that weave together multiple sources. Can be regenerated from source files.
+### The flow
 
-Use `/synthesize` to create wiki pages. Use `/process-inbox` to ingest new sources. When you ingest a source, originals are archived immutably in `raw/`. Wiki pages are optional — the system works perfectly fine with only source files.
+```
+drop/                    You put files here (articles, PDFs, notes)
+  │
+  ├──→ raw/              Original archived immutably (never modified)
+  │
+  └──→ knowledge/
+        ├── source files   Extracted facts, data, quotes (type: source)
+        │     │
+        │     └──→ wiki pages   Synthesized pages weaving multiple
+        │           (type: wiki)  sources together, with cross-links
+        │
+        └── ## Related     Cross-references between files build up
+              links        the knowledge graph organically
+```
+
+### Three layers
+
+1. **`raw/`** — Immutable archive. Originals land here during `/process-inbox`. Never touched again.
+2. **Source files** (`type: source`) — Extracted facts from raw documents. Each points back to its raw original via `source:` frontmatter. This is the ground truth.
+3. **Wiki pages** (`type: wiki`) — Created by `/synthesize` or `/sleep`. Weave together multiple source files into coherent pages about concepts, entities, or comparisons. Every wiki page has a `## Sources` section citing its constituent files and `## Related` links to other pages. Can be deleted and regenerated from source files.
+
+### How it grows
+
+- `/process-inbox` — Ingest new sources. Archives originals to `raw/`, extracts facts to `knowledge/`, updates existing wiki pages that relate to the new material.
+- `/synthesize` — Explicitly create wiki pages from 2+ source files on a topic.
+- `/sleep` — Autonomously explores the brain, finds threads to research, does web searches, creates new source files, synthesizes wiki pages, and strengthens cross-references. The brain grows while you sleep.
+- `/recall` — Query the brain. Wiki pages are surfaced first (they're pre-synthesized). Good answers can be filed back into the wiki.
+
+Wiki pages are optional — the system works perfectly fine with only source files. The `type:` field defaults to `source` when omitted, so no migration is needed.
 
 ## Customization
 

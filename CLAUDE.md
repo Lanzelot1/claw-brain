@@ -18,6 +18,10 @@
 - `drop/` — Inbox for new files. Process immediately when files are present.
 - `output/` — All generated files. Format: `YYYY-MM-DD-description.md`
 
+### Knowledge flow
+
+`drop/` → originals archived to `raw/` (immutable) → facts extracted to `knowledge/` as source files (`type: source`) → wiki pages (`type: wiki`) synthesize across multiple source files with `## Sources` and `## Related` cross-links. Wiki pages can be deleted and regenerated from source files. Source files are the ground truth.
+
 ## Personal Context
 
 Read `memory/me.md` first for personal context (writing style, priorities, tone). This file is gitignored — never committed.
