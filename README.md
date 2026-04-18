@@ -27,7 +27,7 @@ Works as a personal brain, a shared team knowledge base, a [nanoclaw](https://gi
 
 ## Philosophy
 
-- **Files over features** - Knowledge lives in markdown and JSON. No databases, no services, no vendor lock-in.
+- **Files over features** - Knowledge lives in markdown and JSON. The authored layer (`knowledge/`) is tool-independent; the synthesis layer (`graphify-out/`) is generated and regenerable.
 - **Agent-native** - Built for Claude Code. Slash commands do the work. The codebase is small enough to understand in one session.
 - **Structured when you need it** - JSON files with co-located schemas give you validation without infrastructure. Your agent reads and writes them directly.
 - **Personal or enterprise** - Same template works as a personal brain, a shared team knowledge base, a [nanoclaw](https://github.com/nicobailon/nanoclaw) group brain, or a brain for openclaw bots and agents.
@@ -38,9 +38,10 @@ Works as a personal brain, a shared team knowledge base, a [nanoclaw](https://gi
 | Folder | Purpose |
 |--------|---------|
 | `memory/` | Index (`_index.md`), personal profile (`me.md`), session learnings (`lessons.md`), and activity log (`log.md`) - all gitignored except index |
-| `knowledge/` | All documents — source files (raw facts) and wiki pages (synthesized). Source of truth. |
+| `knowledge/` | Authored source files (raw facts, data, quotes). The only layer you write by hand. Ground truth. |
 | `raw/` | Immutable source document archive. Originals preserved here during inbox processing. Gitignored by default. |
 | `drop/` | Inbox for new files. Processed by `/process-inbox`. |
+| `graphify-out/` | Generated synthesis layer (wiki, graph, report) built by [graphify](https://github.com/safishamsi/graphify). Committed except `cache/`. Never hand-edited. |
 | `output/` | Generated files. Named `YYYY-MM-DD-description.md`. |
 
 ## Slash Commands
@@ -53,44 +54,64 @@ Works as a personal brain, a shared team knowledge base, a [nanoclaw](https://gi
 | `/status` | Show brain overview - areas, inbox, recent output, health checks |
 | `/learn` | Extract learnings from the current session into memory |
 | `/recall` | Surface relevant knowledge before starting a task |
-| `/synthesize` | Create or update wiki pages that synthesize across multiple sources |
+| `/synthesize` | Rebuild the synthesis layer (graph + wiki) via graphify |
+| `/graphify` | Underlying graph skill (installed separately — see Synthesis Layer below) |
 | `/sleep` | Autonomous improvement loop — explore, research, synthesize, clean up |
 
-## Wiki Pattern (Optional)
+## Synthesis Layer
 
-Inspired by [Karpathy's LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) pattern. Instead of re-deriving knowledge on every query, the LLM incrementally compiles sources into a structured, interlinked wiki that compounds over time.
+Inspired by [Karpathy's LLM Wiki](https://gist.github.com/karpathy/442a6bf555914893e9891c11519de94f) pattern. Instead of re-deriving knowledge on every query, the brain compiles sources into a structured, interlinked graph + wiki that compounds over time.
+
+Claw-brain owns the **authored layer**: `drop/` → `raw/` → `knowledge/`. Synthesis is delegated to [graphify](https://github.com/safishamsi/graphify), a separate MIT-licensed tool that turns a folder of mixed content into a queryable knowledge graph.
 
 ### The flow
 
 ```
-drop/                    You put files here (articles, PDFs, notes)
+drop/                    You put files here (articles, PDFs, notes, code, images)
   │
   ├──→ raw/              Original archived immutably (never modified)
   │
-  └──→ knowledge/
-        ├── source files   Extracted facts, data, quotes (type: source)
-        │     │
-        │     └──→ wiki pages   Synthesized pages weaving multiple
-        │           (type: wiki)  sources together, with cross-links
+  └──→ knowledge/        Extracted facts, data, quotes (type: source). Ground truth.
         │
-        └── ## Related     Cross-references between files build up
-              links        the knowledge graph organically
+        └──→ graphify-out/    Generated synthesis layer: wiki, graph, report
+              ├── wiki/              per-community markdown articles
+              ├── graph.json         queryable NetworkX graph
+              └── GRAPH_REPORT.md    god nodes, communities, surprising connections
 ```
 
-### Three layers
+### Two layers, one direction
 
-1. **`raw/`** — Immutable archive. Originals land here during `/process-inbox`. Never touched again.
-2. **Source files** (`type: source`) — Extracted facts from raw documents. Each points back to its raw original via `source:` frontmatter. This is the ground truth.
-3. **Wiki pages** (`type: wiki`) — Created by `/synthesize` or `/sleep`. Weave together multiple source files into coherent pages about concepts, entities, or comparisons. Every wiki page has a `## Sources` section citing its constituent files and `## Related` links to other pages. Can be deleted and regenerated from source files.
+1. **Authored (you write this)** — `raw/` (immutable originals) and `knowledge/` (extracted facts with `source:` frontmatter). Tool-independent.
+2. **Generated (graphify writes this)** — `graphify-out/` with wiki, graph, and report. Every edge is tagged `EXTRACTED` / `INFERRED` / `AMBIGUOUS` with source-file provenance. Regenerable from `knowledge/` at any time.
+
+Graphify only reads `knowledge/` and `raw/`. It never modifies them.
 
 ### How it grows
 
-- `/process-inbox` — Ingest new sources. Archives originals to `raw/`, extracts facts to `knowledge/`, updates existing wiki pages that relate to the new material.
-- `/synthesize` — Explicitly create wiki pages from 2+ source files on a topic.
-- `/sleep` — Autonomously explores the brain, finds threads to research, does web searches, creates new source files, synthesizes wiki pages, and strengthens cross-references. The brain grows while you sleep.
-- `/recall` — Query the brain. Wiki pages are surfaced first (they're pre-synthesized). Good answers can be filed back into the wiki.
+- `/process-inbox` — Ingest new sources. Archives originals to `raw/`, extracts facts to `knowledge/` with `source:` frontmatter.
+- `/synthesize` — Thin wrapper that runs `graphify . --update --wiki` to rebuild `graphify-out/`. Commits the refreshed synthesis layer.
+- `/sleep` — Autonomously explores the brain, finds threads to research, does web searches, creates new source files, and rebuilds the graph. The brain grows while you sleep.
+- `/recall` — Query the brain. Reads `graphify-out/GRAPH_REPORT.md` for overview, queries the graph for the specific topic, then falls back to raw source files for quotes.
 
-Wiki pages are optional — the system works perfectly fine with only source files. The `type:` field defaults to `source` when omitted, so no migration is needed.
+### Install graphify
+
+Graphify is a separate tool. One-time setup per clone — installs into a project-local `.venv/` (gitignored) so the pinned version travels with the repo and the MCP config in `.mcp.json` stays portable:
+
+```bash
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt   # pins graphifyy[mcp]
+.venv/bin/graphify install                  # register /graphify slash command
+.venv/bin/graphify claude install           # enable always-on PreToolUse hook
+.venv/bin/graphify hook install             # rebuild graph on every commit
+```
+
+The `.mcp.json` in this repo points to `.venv/bin/python3`, exposing graphify as an MCP server so Claude Code sessions can call `query_graph`, `get_node`, `get_neighbors`, and `shortest_path` directly.
+
+If you prefer a global install via `pipx install graphifyy[mcp]==0.4.23`, edit `.mcp.json` to point at your pipx venv path (e.g. `~/.local/pipx/venvs/graphifyy/bin/python`) — the default here assumes the local `.venv/` flow.
+
+### Swap path
+
+If graphify stagnates, migration targets are [Microsoft GraphRAG](https://github.com/microsoft/graphrag) or [LightRAG](https://github.com/HKUDS/LightRAG) — both consume the same input (a folder of source files). The authored layer in `knowledge/` is tool-independent; only incremental rebuilds are tied to graphify.
 
 ## Customization
 

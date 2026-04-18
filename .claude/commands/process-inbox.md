@@ -16,9 +16,8 @@ Process all new files in the `drop/` folder.
       - If the file is a PDF, image, data file, or unstructured text: create a new `.md` file in `knowledge/{area}/` that extracts the key facts, data, and quotes. Set `source:` to the `raw/` path. Set `type: source`. The raw file stays in `raw/` only.
    e. **Check `source:` frontmatter:** If the source is unclear, ask the user: "Where did this file come from?"
    f. **Cross-reference:** Search other knowledge areas for substantively related files. If found, ask: "I found these related files — should I add cross-references?" If yes, add `## Related` sections with reciprocal links.
-   g. **Update wiki pages:** Check if any existing wiki pages (`type: wiki`) in `knowledge/` cover topics related to this new source. If so, ask: "These wiki pages may need updating with the new information: [list]. Update them?" If yes, incorporate new facts and add the new source to their `## Sources` section.
-   h. **Add entries** to `memory/_index.md` (area section + Recently Added)
-   i. **Log:** Append to `memory/log.md`: `YYYY-MM-DD HH:MM | ingest | {filename} → knowledge/{area}/{filename}`
+   g. **Add entries** to `memory/_index.md` (area section + Recently Added)
+   h. **Log:** Append to `memory/log.md`: `YYYY-MM-DD HH:MM | ingest | {filename} → knowledge/{area}/{filename}`
 3. **If a file doesn't fit any existing area:**
    - Ask the user: "This file doesn't fit any existing area. Want to create a new one?"
    - If yes, run the `/new` workflow first, then process the file into the new area

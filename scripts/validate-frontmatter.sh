@@ -24,14 +24,6 @@ while IFS= read -r file; do
     echo "FAIL: $file — missing source: in frontmatter"
     errors=$((errors + 1))
   fi
-
-  # If type: wiki, check for ## Sources section
-  if echo "$frontmatter" | grep -q '^type: wiki'; then
-    if ! grep -q '^## Sources' "$file"; then
-      echo "FAIL: $file — wiki page missing ## Sources section"
-      errors=$((errors + 1))
-    fi
-  fi
 done < <(find knowledge -name '*.md' -not -name '.gitkeep' 2>/dev/null)
 
 if [[ $found -eq 0 ]]; then

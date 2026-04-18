@@ -1,53 +1,37 @@
 ---
-description: Create or update wiki pages that synthesize across multiple knowledge sources
+description: Rebuild the synthesis layer (graph + wiki) via graphify
 ---
 
-Create or update synthesized wiki pages (entity pages, concept pages, or comparison pages) from existing knowledge source files.
+Thin wrapper around `graphify`. Rebuilds `graphify-out/` (markdown wiki, `graph.json`, `GRAPH_REPORT.md`) from `knowledge/`.
 
 ## Arguments
 
-Optional: specific topic, entity, or concept name. E.g. `/synthesize "machine learning"` or `/synthesize "Company X vs Company Y"`
+Optional topic: `/synthesize "machine learning"`. When passed, after the rebuild the command also runs `graphify query "{topic}"` and surfaces the subgraph result. No argument → just rebuild.
+
+## Prerequisites
+
+- `graphifyy` installed into `.venv/` (see README "Install graphify"), or globally via pipx.
+- `graphify install` has registered the `/graphify` skill in Claude Code.
+- If missing, tell the user to run the install commands and stop.
+
+The examples below use `.venv/bin/graphify`. If you installed graphify globally, swap `.venv/bin/graphify` for plain `graphify`.
 
 ## Steps
 
-1. **Read `memory/_index.md`** to understand all available knowledge
-2. **Determine what to synthesize:**
-   - If an argument was given: focus on that topic/entity/concept
-   - If no argument: scan knowledge files to suggest candidates. Look for:
-     - Entities (people, companies, products, tools) mentioned in 3+ source files
-     - Concepts that span multiple areas
-     - Topics where information is scattered across files
-   - Present candidates and ask: "Which would you like me to synthesize?"
-3. **Gather source material:** Read all relevant source files (`type: source` or no type field). Note the specific facts, data, and quotes from each.
-4. **Check for existing wiki page:** Search `knowledge/` for an existing wiki page on this topic (`type: wiki` in frontmatter).
-5. **Create or update the wiki page:**
-   - **Location:** `knowledge/{most-relevant-area}/` or `knowledge/wiki/` if cross-cutting
-   - **Frontmatter:**
-     ```yaml
-     ---
-     type: wiki
-     source: "synthesized from knowledge sources"
-     created: YYYY-MM-DD
-     updated: YYYY-MM-DD
-     ---
-     ```
-   - **Content:** Weave together facts from the source files into a coherent page. Use specific facts, data, and quotes — not vague summaries. Organize with clear headings.
-   - **If sources contradict:** Note the contradiction explicitly rather than silently picking one.
-   - **Required `## Sources` section** at the bottom: list every source file used, with markdown links and a brief note on what each contributed.
-   - **Cross-references:** Add `## Related` section linking to related wiki pages and source files.
-6. **Update index:** Add the wiki page to the "Wiki Pages" section in `memory/_index.md`
-7. **Update source files:** In each source file that was used, add a cross-reference back to the new wiki page (in their `## Related` section).
-8. **Log:** Append to `memory/log.md`: `YYYY-MM-DD HH:MM | synthesize | created/updated {wiki-page-path} from {N} sources`
+1. **Verify install:** run `.venv/bin/graphify --version`. If the command is not found, print the install instructions from `README.md` (create `.venv/`, `pip install -r requirements.txt`, `graphify install`) and exit.
+2. **Rebuild:** run `.venv/bin/graphify . --update --wiki` from the repo root. This uses the SHA256 cache so only changed files re-extract. Capture node/edge counts from the output.
+3. **Optional query:** if `$ARGUMENTS` is non-empty, run `.venv/bin/graphify query "$ARGUMENTS" --graph graphify-out/graph.json` and show the user the subgraph result.
+4. **Log:** append to `memory/log.md`: `YYYY-MM-DD HH:MM | synthesize | graphify rebuild — {N} nodes, {M} edges`.
 
 ## Git
 
-1. Commit on a new branch (e.g. `synthesize-{topic}-YYYY-MM-DD`)
-2. Push and open a PR
-3. Share the PR link
+1. `git checkout -b synthesize-YYYY-MM-DD` (if on `main`).
+2. Stage `graphify-out/` (excluding `cache/`, which is gitignored) and `memory/log.md`.
+3. Commit with a short message like `synthesize: rebuild graph ({N} nodes, {M} edges)`.
+4. Push and open a PR. Share the link.
 
 ## Rules
 
-- Wiki pages must contain specific facts traced back to sources — no AI filler
-- Every claim should be traceable to a source file via the ## Sources section
-- Don't create a wiki page from a single source — minimum 2 source files to justify synthesis
-- If updating an existing wiki page, update the `updated:` date in frontmatter
+- Never hand-edit files under `graphify-out/`. This command regenerates them.
+- If `graphify` fails (missing API access, corrupted cache, etc.), surface the error to the user — do not silently continue or commit partial output.
+- Do not pass `--mode deep` by default; only if the user explicitly asks for aggressive INFERRED edge extraction.

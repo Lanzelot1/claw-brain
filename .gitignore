@@ -9,6 +9,12 @@ memory/log.md
 raw/*
 !raw/.gitkeep
 
+# Graphify extraction cache (regenerable). The rest of graphify-out/ is committed.
+graphify-out/cache/
+
+# Project-local Python venv (graphify + MCP server)
+.venv/
+
 # Secrets
 .env
 .env.*
