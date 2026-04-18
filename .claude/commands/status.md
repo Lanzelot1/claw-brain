@@ -42,15 +42,17 @@ After the score, run detailed health checks:
 
 Present health results as a compact table or list. Only highlight problems — don't list every file if everything is healthy.
 
-## Wiki Health
+## Graph Layer
 
-Only display this section if any `type: wiki` files exist in `knowledge/`.
+Only display this section if `graphify-out/graph.json` exists.
 
 | Check | How |
 |-------|-----|
-| Wiki coverage | Count wiki pages vs source files. Report ratio (not a score — there's no "right" number). |
-| Stale wiki pages | Wiki pages whose source files have been modified more recently than the wiki page's `updated:` date. |
-| Unlinked sources | Source files that aren't referenced in any wiki page's `## Sources` section. |
+| Nodes / edges | Parse from `graphify-out/GRAPH_REPORT.md` (or `jq '.nodes \| length'` / `.edges \| length` on `graph.json`). |
+| Communities | Parse the community count from `GRAPH_REPORT.md`. |
+| God nodes | List the top 5 god nodes from `GRAPH_REPORT.md`. |
+| AMBIGUOUS edges | Count edges with `confidence: AMBIGUOUS` in `graph.json` — these are human-review candidates. |
+| Graph staleness | Compare the newest mtime under `knowledge/` to the mtime of `graphify-out/graph.json`. If knowledge is newer, report "stale — run `/synthesize`". |
 | Contradictions | Note any contradictions flagged in `memory/log.md` that haven't been resolved. |
 
 Present as an addendum — not part of the main health score.

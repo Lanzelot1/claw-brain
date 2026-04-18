@@ -13,14 +13,28 @@
 - `memory/me.md` — Personal profile (gitignored).
 - `memory/lessons.md` — Learnings from past sessions (gitignored).
 - `memory/log.md` — Chronological activity log (gitignored). Append here after ingestions, queries, synthesis, lint.
-- `knowledge/` — All knowledge documents. Two types: **source files** (raw facts, data, quotes) and **wiki pages** (synthesized entity/concept/comparison pages). Single source of truth.
+- `knowledge/` — Authored source files (raw facts, data, quotes). The only layer you write by hand. Ground truth.
 - `raw/` — Immutable source document archive. Originals from `drop/` land here during processing. Never modify files in `raw/`.
 - `drop/` — Inbox for new files. Process immediately when files are present.
+- `graphify-out/` — Generated synthesis layer (wiki, graph, report). Rebuilt by `graphify`. Committed to git except `cache/`. Never edit by hand.
 - `output/` — All generated files. Format: `YYYY-MM-DD-description.md`
 
 ### Knowledge flow
 
-`drop/` → originals archived to `raw/` (immutable) → facts extracted to `knowledge/` as source files (`type: source`) → wiki pages (`type: wiki`) synthesize across multiple source files with `## Sources` and `## Related` cross-links. Wiki pages can be deleted and regenerated from source files. Source files are the ground truth.
+`drop/` → originals archived to `raw/` (immutable) → facts extracted to `knowledge/` as source files (`type: source`) → `graphify` reads `knowledge/` and writes `graphify-out/` (markdown wiki, `graph.json`, `GRAPH_REPORT.md`). Source files are the ground truth. The graph layer is a derived view — it can be deleted and regenerated at any time.
+
+### Graph layer (graphify)
+
+Synthesis is owned by [graphify](https://github.com/safishamsi/graphify), installed as the `/graphify` slash command. It extracts entities and relationships from `knowledge/`, builds a NetworkX graph, auto-generates a wiki per community, and tags every edge `EXTRACTED` / `INFERRED` / `AMBIGUOUS` with source-file provenance.
+
+- **Rebuild:** `/synthesize` (wrapper around `graphify . --update --wiki`), or automatic via the post-commit hook after `graphify hook install`.
+- **Query:** `/graphify query "..."` or the `graphify` MCP server (`.mcp.json`) exposing `query_graph`, `get_node`, `get_neighbors`, `shortest_path`.
+- **Always-on:** when `graphify claude install` has been run, Claude reads `graphify-out/GRAPH_REPORT.md` before every Glob/Grep, so navigation happens via graph structure, not keyword search.
+- **Write boundary:** graphify only reads `knowledge/` and `raw/`. It never modifies them. All graphify output lives under `graphify-out/`.
+
+#### Swap path
+
+Graphify's outputs are plain files (markdown wiki, NetworkX `graph.json`). If the project stagnates, the committed artifacts keep working. Migration targets are [Microsoft GraphRAG](https://github.com/microsoft/graphrag) or [LightRAG](https://github.com/HKUDS/LightRAG) — both consume the same input (a folder of source files). The authored layer in `knowledge/` is tool-independent; only incremental rebuilds are tied to graphify.
 
 ## Personal Context
 
@@ -32,19 +46,19 @@ If `memory/me.md` doesn't exist yet, suggest running `/onboard` to create it.
 
 ## Rules
 
-- **Index first** — Before any task, read `memory/_index.md`, then open the relevant `knowledge/` files as needed.
-- **No summaries of individual sources** — Source files (`type: source`) contain raw facts, data, quotes. Don't create a distilled copy of a single source file. Wiki pages (`type: wiki`) are the exception: they synthesize across multiple sources and must link back to all of them.
-- **Two knowledge types** — Files in `knowledge/` have a `type:` field in frontmatter: `source` (default, raw facts) or `wiki` (synthesized page). Omitted `type:` is treated as `source`.
-- **Wiki pages must cite sources** — Every wiki page needs a `## Sources` section at the bottom listing the knowledge files it synthesizes from, using standard markdown links.
-- **Outputs as files** — Always save to `output/YYYY-MM-DD-description.md`.
+- **Index first** — Before any task, read `memory/_index.md` and `graphify-out/GRAPH_REPORT.md` (if it exists), then open the relevant `knowledge/` files as needed.
+- **No summaries of individual sources** — Source files contain raw facts, data, quotes. Don't create a distilled copy of a single source file. Synthesis across multiple sources is handled by graphify in `graphify-out/`, not by hand in `knowledge/`.
+- **knowledge/ is source-only** — Every file in `knowledge/` is an authored source file. Frontmatter can set `type: source` explicitly or omit `type:` (same thing). Don't hand-write synthesized pages inside `knowledge/`; that's graphify's job.
+- **graphify-out/ is generated** — Never hand-edit files under `graphify-out/`. Regenerate via `/synthesize` or `graphify . --update --wiki` if something looks wrong.
+- **Outputs as files** — Always save ad-hoc outputs to `output/YYYY-MM-DD-description.md`.
 - **No messages** without explicit confirmation.
 - **English** for everything.
 - When writing outreach/content: read `memory/me.md` for personal writing style.
 - **Source required** — Every file in `knowledge/` needs `source:` frontmatter. Can be a URL, internal JSON file path, or description (e.g. `"interview with client X"`). No knowledge without provenance.
 - **Facts over fluff** — Knowledge files must contain specific facts, data, quotes, or raw information. Never write vague summaries or AI filler.
 - **Raw is immutable** — Never modify, rename, or delete files in `raw/`. It's the archive of original source documents.
-- **Log activity** — After ingestions, synthesis, queries that produce wiki updates, and lint passes, append an entry to `memory/log.md`.
-- **Cross-reference when substantive** — When creating or updating knowledge files, add standard markdown links to related files in other areas. Use `[title](../area/file.md)` format. Don't force connections — only link when the relationship is genuinely useful.
+- **Log activity** — After ingestions, synthesis rebuilds, queries that change the graph, and lint passes, append an entry to `memory/log.md`.
+- **Cross-reference when substantive** — When creating or updating knowledge files, add standard markdown links to related source files. Use `[title](../area/file.md)` format. Don't force connections — only link when the relationship is genuinely useful. (Graphify will pick up inferred connections automatically; your explicit links surface the obvious ones.)
 
 ## Git Workflow
 

@@ -44,16 +44,12 @@ Read through the brain and actively grow it. This is the creative phase — not 
    - Create new source files in `knowledge/` with `source:` frontmatter pointing to the URLs found
    - Set `type: source` — these are raw facts, not synthesis
 
-4. **Synthesize new wiki pages** — After adding new sources, check if any topic now has enough material (3+ source files) to justify a wiki page:
-   - Create wiki pages with `type: wiki` frontmatter following `/synthesize` conventions
-   - Weave together facts from multiple sources into coherent pages
-   - Include `## Sources` section citing all constituent files
-   - Add to the "Wiki Pages" section of `_index.md`
-
-5. **Strengthen connections** — For any new or updated files:
-   - Add cross-references to related files in other areas
+4. **Strengthen connections** — For any new or updated source files:
+   - Add cross-references (explicit markdown links) to related files in other areas
    - Add reciprocal links in those related files
-   - Update existing wiki pages that should reference the new material
+   - Graphify will pick up inferred connections automatically on the next rebuild; focus your explicit links on the obvious ones
+
+5. **Rebuild the graph** — After adding new sources, run `graphify . --update --wiki` to refresh `graphify-out/`. This regenerates the synthesis layer (wiki + graph) from the new corpus. Skip if no source files changed this cycle.
 
 Commit each research topic separately. Max 5 research threads per sleep cycle.
 
@@ -66,8 +62,8 @@ Work through in order. Skip any that score 100%.
 3. **Missing sources** — Research provenance, add `source:` frontmatter
 4. **Stale knowledge** — Files >90 days old → web search for updates. If new information is found, update the file with new facts and note what changed. Update the `source:` field if a newer URL is available.
 5. **Cross-references** — Add links between related knowledge files
-6. **Contradiction check** — Scan wiki pages (`type: wiki`) vs their cited sources for conflicting claims. If a clear resolution exists (newer source supersedes older), update the wiki page and note the resolution. If ambiguous, flag for human review in the sleep log.
-7. **Wiki staleness** — For each wiki page, check if any of its source files have been updated since the wiki page's `updated:` date. If so, attempt auto-update if the changes are straightforward; otherwise flag for human review.
+6. **Contradiction check** — Use `graphify-out/GRAPH_REPORT.md` (if it exists) and `graph.json` to find `AMBIGUOUS` edges — these are graphify's flags for conflicting or weak signals. For each, read the implicated source files. If a clear resolution exists (e.g. newer source supersedes older), note it in the sleep log as a suggestion — do NOT edit source files automatically. If ambiguous, flag for human review.
+7. **Graph rebuild** — If any source file changed during this cycle (Phases 1–3 added or modified files), run `graphify . --update --wiki` at the end to refresh `graphify-out/`.
 8. **Rework candidates** — Look for knowledge files that could be restructured:
    - Large files that cover multiple distinct topics → suggest splitting
    - Multiple small files on the same topic → suggest merging

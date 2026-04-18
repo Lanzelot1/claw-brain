@@ -9,6 +9,9 @@ memory/log.md
 raw/*
 !raw/.gitkeep
 
+# Graphify extraction cache (regenerable). The rest of graphify-out/ is committed.
+graphify-out/cache/
+
 # Secrets
 .env
 .env.*
