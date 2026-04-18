@@ -95,17 +95,19 @@ Graphify only reads `knowledge/` and `raw/`. It never modifies them.
 
 ### Install graphify
 
-Graphify is a separate tool. One-time install per machine:
+Graphify is a separate tool. One-time setup per clone — installs into a project-local `.venv/` (gitignored) so the pinned version travels with the repo and the MCP config in `.mcp.json` stays portable:
 
 ```bash
-pipx install -r requirements.txt           # pin to the version in requirements.txt
-graphify install                            # register /graphify slash command
-graphify claude install                     # enable always-on PreToolUse hook
-graphify hook install                       # rebuild graph on every commit
-pipx inject graphifyy 'graphifyy[mcp]'      # MCP server dependencies
+python3 -m venv .venv
+.venv/bin/pip install -r requirements.txt   # pins graphifyy[mcp]
+.venv/bin/graphify install                  # register /graphify slash command
+.venv/bin/graphify claude install           # enable always-on PreToolUse hook
+.venv/bin/graphify hook install             # rebuild graph on every commit
 ```
 
-The `.mcp.json` in this repo exposes graphify as an MCP server, so Claude Code sessions can call `query_graph`, `get_node`, `get_neighbors`, and `shortest_path` directly.
+The `.mcp.json` in this repo points to `.venv/bin/python3`, exposing graphify as an MCP server so Claude Code sessions can call `query_graph`, `get_node`, `get_neighbors`, and `shortest_path` directly.
+
+If you prefer a global install via `pipx install graphifyy[mcp]==0.4.23`, edit `.mcp.json` to point at your pipx venv path (e.g. `~/.local/pipx/venvs/graphifyy/bin/python`) — the default here assumes the local `.venv/` flow.
 
 ### Swap path
 

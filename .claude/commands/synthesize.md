@@ -10,15 +10,17 @@ Optional topic: `/synthesize "machine learning"`. When passed, after the rebuild
 
 ## Prerequisites
 
-- `graphifyy` installed (`pipx install graphifyy==0.4.23` or version pinned in `requirements.txt`).
+- `graphifyy` installed into `.venv/` (see README "Install graphify"), or globally via pipx.
 - `graphify install` has registered the `/graphify` skill in Claude Code.
-- If missing, tell the user to run those commands and stop.
+- If missing, tell the user to run the install commands and stop.
+
+The examples below use `.venv/bin/graphify`. If you installed graphify globally, swap `.venv/bin/graphify` for plain `graphify`.
 
 ## Steps
 
-1. **Verify install:** run `graphify --version`. If the command is not found, print install instructions from `requirements.txt` and exit.
-2. **Rebuild:** run `graphify . --update --wiki` from the repo root. This uses the SHA256 cache so only changed files re-extract. Capture node/edge counts from the output.
-3. **Optional query:** if `$ARGUMENTS` is non-empty, run `graphify query "$ARGUMENTS" --graph graphify-out/graph.json` and show the user the subgraph result.
+1. **Verify install:** run `.venv/bin/graphify --version`. If the command is not found, print the install instructions from `README.md` (create `.venv/`, `pip install -r requirements.txt`, `graphify install`) and exit.
+2. **Rebuild:** run `.venv/bin/graphify . --update --wiki` from the repo root. This uses the SHA256 cache so only changed files re-extract. Capture node/edge counts from the output.
+3. **Optional query:** if `$ARGUMENTS` is non-empty, run `.venv/bin/graphify query "$ARGUMENTS" --graph graphify-out/graph.json` and show the user the subgraph result.
 4. **Log:** append to `memory/log.md`: `YYYY-MM-DD HH:MM | synthesize | graphify rebuild — {N} nodes, {M} edges`.
 
 ## Git

@@ -49,7 +49,7 @@ Read through the brain and actively grow it. This is the creative phase — not 
    - Add reciprocal links in those related files
    - Graphify will pick up inferred connections automatically on the next rebuild; focus your explicit links on the obvious ones
 
-5. **Rebuild the graph** — After adding new sources, run `graphify . --update --wiki` to refresh `graphify-out/`. This regenerates the synthesis layer (wiki + graph) from the new corpus. Skip if no source files changed this cycle.
+5. **Rebuild the graph** — After adding new sources, run `.venv/bin/graphify . --update --wiki` to refresh `graphify-out/`. This regenerates the synthesis layer (wiki + graph) from the new corpus. Skip if no source files changed this cycle.
 
 Commit each research topic separately. Max 5 research threads per sleep cycle.
 
@@ -63,7 +63,7 @@ Work through in order. Skip any that score 100%.
 4. **Stale knowledge** — Files >90 days old → web search for updates. If new information is found, update the file with new facts and note what changed. Update the `source:` field if a newer URL is available.
 5. **Cross-references** — Add links between related knowledge files
 6. **Contradiction check** — Use `graphify-out/GRAPH_REPORT.md` (if it exists) and `graph.json` to find `AMBIGUOUS` edges — these are graphify's flags for conflicting or weak signals. For each, read the implicated source files. If a clear resolution exists (e.g. newer source supersedes older), note it in the sleep log as a suggestion — do NOT edit source files automatically. If ambiguous, flag for human review.
-7. **Graph rebuild** — If any source file changed during this cycle (Phases 1–3 added or modified files), run `graphify . --update --wiki` at the end to refresh `graphify-out/`.
+7. **Graph rebuild** — If any source file changed during this cycle (Phases 1–3 added or modified files), run `.venv/bin/graphify . --update --wiki` at the end to refresh `graphify-out/`.
 8. **Rework candidates** — Look for knowledge files that could be restructured:
    - Large files that cover multiple distinct topics → suggest splitting
    - Multiple small files on the same topic → suggest merging

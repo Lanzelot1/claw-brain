@@ -13,7 +13,7 @@ Surface context relevant to the current task from the brain's authored layer (`k
 5. **Read `graphify-out/GRAPH_REPORT.md`** (if it exists) for god nodes and community clusters — this is your overview.
 6. **Query the graph** for the specific topic:
    - Preferred: call the `graphify` MCP server (`query_graph`, `get_node`, `get_neighbors`) if registered in `.mcp.json`.
-   - Fallback: run `graphify query "{topic}" --graph graphify-out/graph.json --budget 1500` from a shell.
+   - Fallback: run `.venv/bin/graphify query "{topic}" --graph graphify-out/graph.json --budget 1500` from a shell (or plain `graphify` if installed globally).
    - If `graphify-out/` doesn't exist yet (fresh brain), skip to step 7.
 7. **Scan `knowledge/`** for files matching the task topic — check filenames and scan content of likely matches. These are the raw quotes the graph was built from.
 8. **Follow explicit links** — for each matched source file, scan its content for outbound markdown links (`](../` pattern). Include linked files as "Related context" — one level deep only.
